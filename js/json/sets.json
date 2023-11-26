@@ -1,0 +1,22 @@
+const sets = [
+    {
+        "words": [
+            {
+                "order": 1,
+                "direction" : "c",
+                "word": "EVE"
+            },
+            {
+                "order": 2,
+                "direction" : "c",
+                "word": "REVERB"
+            },
+            {
+                "order": 3,
+                "direction" : "r",
+                "word": "A BIT OVER BAKED"
+            }
+        ],
+        "date": "2023-11-26"
+    }
+]
