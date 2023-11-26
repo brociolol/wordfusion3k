@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TOP SECRET PROJECT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Slab&family=Lilita+One&display=swap" rel="stylesheet">
     <style>
     </style>
   </head>
-  <body style="background-color: #E9F1F7">
+  <body style="background-color: #EDF2F4">
     <div class="d-flex justify-content-center align-items-center" id="container" style="">
       <main class="d-flex justify-content-center align-items-center flex-column text-center p-2 mt-3" id="main" style="width: 100%; max-width: 900px; height: 90vh;">
-        <h1 id="header" class="text-center" style="height: 50px; color: #131B23">
+        <h1 id="header" class="text-center" style="height: 50px; color: #004F2D; font-family: 'Lilita One', sans-serif;">
         WORD FUSION
       </h1>
           <div style="">
@@ -20,7 +23,7 @@
           </div>
           </div>
           <div class="mt-5">
-           <button type="button" class="btn btn-primary" onClick="submitWord()" style="background-color: #131B23; border-color: #131B23">Submit</button>
+           <button type="button" class="btn btn-primary" onClick="submitWord()" style="background-color: #D87CAC; border-color: #D87CAC; color: #004F2D; font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
           </div>
       </main>
       <footer id="footer">
@@ -56,7 +59,7 @@
         return dateToReturn
       }
 
-      function generateBoxes(word, lettersToShow) {
+      function generateBoxes(word, clue, lettersToShow) {
         let lettersShow = (lettersToShow ? lettersToShow : []);
 
         let wordsHTML = '';
@@ -67,10 +70,12 @@
           }
   
          let letter = (lettersShow.indexOf(word.charAt(w)) >= 0 ? word.charAt(w) : "");
-         let borderColor = (letter.length > 0 ? "border-success" : "border-black");
-         wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1">&nbsp;'
+         let borderColor = (letter.length > 0 ? "border-success text-bg-success" : "border-black");
+         let readOnly = (letter.length > 0 ? "readonly" : "");
+         wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" ' + readOnly + '>&nbsp;'
         }
 
+        wordsHTML += '<br><div id="clue" class="mb-2 text-center pt-5" style="">' + clue + '</div>'
         wordHolderDiv.innerHTML = wordsHTML;
       }
 
@@ -96,7 +101,8 @@
           let word = lookupSet.filter((set) => set.order == round);
           if(word.length > 0) {
             let currWord = word[0].word.replace(/\s/g, '');
-            generateBoxes(currWord, lettersToShow);
+            let currClue = word[0].clue;
+            generateBoxes(currWord, currClue, lettersToShow);
           round = parseInt(round) + 1;
           roundDiv.value = round;
           }
