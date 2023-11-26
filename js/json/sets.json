@@ -4,17 +4,20 @@ const sets = [
             {
                 "order": 1,
                 "direction" : "c",
-                "word": "EVE"
+                "word": "EVE",
+                "clue": "Twas the night before."
             },
             {
                 "order": 2,
                 "direction" : "c",
-                "word": "REVERB"
+                "word": "REVERB",
+                "clue": "Guitar's echo."
             },
             {
                 "order": 3,
                 "direction" : "r",
-                "word": "A BIT OVER BAKED"
+                "word": "A BIT UNDER BAKED",
+                "clue": "Could've used more time."
             }
         ],
         "date": "2023-11-26"
