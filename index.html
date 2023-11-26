@@ -39,6 +39,7 @@
 
       // define elements to reference
       const wordHolderDiv = document.getElementById('wordHolder');
+      const letterDivs = document.querySelectorAll('.guessedLetter');
 
       // find the word set for the day
       const todaySet = wordSets[0];
@@ -52,6 +53,16 @@
       //const thirdWord = todaySet.third.replace(/\s/g, '');
 
       let round = 1; 
+
+      function focusOnNextSib(callback) {
+        const letterRegex = /^[a-z]+$/i;
+        let active = document.activeElement;
+        let sibling = document.activeElement.nextElementSibling;
+        let activeValue = active.value;
+        if(letterRegex.test(activeValue)) {
+          sibling.focus();
+        }
+      }
 
       function getCurrentDate(todayDate) {
         let month = todayDate.getMonth() + 1;
@@ -72,10 +83,10 @@
          let letter = (lettersShow.indexOf(word.charAt(w)) >= 0 ? word.charAt(w) : "");
          let borderColor = (letter.length > 0 ? "border-success text-bg-success" : "border-black");
          let readOnly = (letter.length > 0 ? "readonly" : "");
-         wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" ' + readOnly + '>&nbsp;'
+         wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" ' + readOnly + ' onKeyup="focusOnNextSib()">&nbsp;'
         }
 
-        wordsHTML += '<br><div id="clue" class="mb-2 text-center pt-5" style="">' + clue + '</div>'
+        wordsHTML += '<br><div id="clue" class="mb-2 text-center pt-5" style=""><b>Clue: </b>' + clue + '</div>'
         wordHolderDiv.innerHTML = wordsHTML;
       }
 
