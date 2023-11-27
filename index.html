@@ -58,9 +58,14 @@
         const letterRegex = /^[a-z]+$/i;
         let active = document.activeElement;
         let sibling = document.activeElement.nextElementSibling;
-        let activeValue = active.value;
-        if(letterRegex.test(activeValue)) {
+        if (active.className.indexOf("text-bg-success") > 0) {
           sibling.focus();
+          focusOnNextSib();
+        } else {
+          let activeValue = active.value;
+            if(letterRegex.test(activeValue)) {
+              sibling.focus();
+            }
         }
       }
 
