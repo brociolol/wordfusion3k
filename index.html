@@ -26,7 +26,7 @@
 
       @media only screen and (max-width: 600px) {
   .keypad {
-    font-size: 12px;
+    font-size: 10px;
   }
 }
 
@@ -43,7 +43,7 @@
             <div class="" id="wordHolder" style="">
           </div>
           </div>
-          <div class="mt-5">
+          <div class="mt-2">
            <button type="button" class="btn btn-primary mb-5" onClick="submitWord()" style="background-color: #D87CAC; border-color: #D87CAC; color: #004F2D; font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
           </div>
           <div>
@@ -199,7 +199,7 @@
          wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" readOnly onFocus="logFocus(\'letter' + w + '\')">&nbsp;'
         }
 
-        wordsHTML += '<br><div id="clue" class="mb-2 text-center pt-5" style=""><b>Clue: </b>' + clue + '</div>'
+        wordsHTML += '<div id="clue" class="mb-2 text-center pt-3" style=""><b>Clue: </b>' + clue + '</div>'
         wordHolderDiv.innerHTML = wordsHTML;
 
         let boxToFocusOn = document.getElementById('letter0');
