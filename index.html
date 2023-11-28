@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab&family=Lilita+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <style>
       .keypad {
         border: 1px solid #8a858f;
@@ -24,12 +25,20 @@
         border: 1px solid #8a858f;
       }
 
-      .guessedLetter:hover {
-        background-color: #D87CAC;
+      .success-guess {
+        background-color: #004F2D;
+        color: #fff;
+        border: 1px solid #000;
+        outline: none;
       }
 
-      .guessedLetter:active {
-        background-color: #D87CAC;
+      input:active {
+        background-color: #F9B9C3
+      }
+
+      input:focus {
+        background-color: #F9B9C3;
+        outline: none;
       }
 
       @media only screen and (max-width: 600px) {
@@ -90,7 +99,7 @@
           </div>
           <div class="mb-2">
             <button type="button" class="btn keypad" onClick="keypad('<')"><</button>
-            <button type="button" class="btn keypad" onClick="keypad('delete')">X</button>
+            <button type="button" class="btn keypad" onClick="keypad('delete')"><b><i class="bi bi-backspace"></i></b></button>
             <button type="button" class="btn keypad" onClick="keypad('>')">></button>
           </div>
           </div>
@@ -138,7 +147,7 @@
              focusOnNextSib();
            } else if (letter == '<') {
             focusOnPrevSib();
-           } else if (letter == 'delete' && lastFocusDiv.className.indexOf("text-bg-success") < 0) {
+           } else if (letter == 'delete' && lastFocusDiv.className.indexOf("success-guess") < 0) {
             lastFocusDiv.value = '';
             lastFocusDiv.focus();
            }
@@ -151,7 +160,7 @@
         let sibling = lastFocusDiv.previousElementSibling;
         if (sibling.className.indexOf("guessedLetter") >= 0) {
           sibling.focus();
-        if (active.className.indexOf("text-bg-success") >= 0) {
+        if (active.className.indexOf("success-guess") >= 0) {
           sibling.focus();
           focusOnNextSib();
         } else {
@@ -172,7 +181,7 @@
         console.log(sibling.className);
         if (sibling.className.indexOf("guessedLetter") >= 0) {
           sibling.focus();
-        if (sibling.className.indexOf("text-bg-success") >= 0) {
+        if (sibling.className.indexOf("success-guess") >= 0) {
           sibling.focus();
           focusOnNextSib();
         } else {
@@ -204,7 +213,7 @@
           }
   
          let letter = (lettersShow.indexOf(word.charAt(w)) >= 0 ? word.charAt(w) : "");
-         let borderColor = (letter.length > 0 ? "border-success text-bg-success" : "border-black");
+         let borderColor = (letter.length > 0 ? "success-guess border-black" : "border-black");
          wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" readOnly onFocus="logFocus(\'letter' + w + '\')">&nbsp;'
         }
 
