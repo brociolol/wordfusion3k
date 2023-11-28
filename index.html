@@ -56,7 +56,8 @@
         <h1 id="header" class="text-center" style="height: 50px; color: #004F2D; font-family: 'Lilita One', sans-serif;">
         WORD 'EM UP!
       </h1>
-          <div style="">
+          <div id="gameContainer" style="height: 175px;">
+            <div id="results"><i class="bi bi-circle result"></i>&nbsp;<i class="bi bi-circle result"></i>&nbsp;<i class="bi bi-circle result"></i></div>
             <input type="hidden" value="1" id="round">
             <div class="" id="wordHolder" style="">
           </div>
@@ -117,7 +118,9 @@
 
       // define elements to reference
       const wordHolderDiv = document.getElementById('wordHolder');
+      const gameContainerDiv = document.getElementById('gameContainer');
       const letterDivs = document.querySelectorAll('.guessedLetter');
+      const roundDiv = document.getElementById('round');
 
       // find the word set for the day
       const todaySet = wordSets[0];
@@ -137,6 +140,8 @@
 
       let lastFocus = '';
       let lastFocusDiv = '';
+
+      let gameResults = [];
 
       function keypad(letter) {
         if (letterRegex.test(letter) && letter.length == 1) {
@@ -212,13 +217,22 @@
             wordsHTML += '<input type="hidden" id="word" name="word" value="' + word + '"><br>'
           }
   
-         let letter = (lettersShow.indexOf(word.charAt(w)) >= 0 ? word.charAt(w) : "");
-         let borderColor = (letter.length > 0 ? "success-guess border-black" : "border-black");
+         let letter = "";
+         let borderColor = (letter.length > 0 ? "border-black" : "border-black");
          wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" readOnly onFocus="logFocus(\'letter' + w + '\')">&nbsp;'
         }
 
         wordsHTML += '<div id="clue" class="mb-2 text-center pt-3" style=""><b>Clue: </b>' + clue + '</div>'
         wordHolderDiv.innerHTML = wordsHTML;
+
+        let lettersToHighlight = Array.from(new Set(lettersToShow));
+
+        let keys = document.querySelectorAll('.keypad');
+        for (let k = 0; k < keys.length; k++) {
+          if (lettersToHighlight.indexOf(keys[k].innerHTML) >= 0) {
+            keys[k].className = keys[k].className + ' success-guess';
+          }
+        }
 
         let boxToFocusOn = document.getElementById('letter0');
         boxToFocusOn.focus();
@@ -231,22 +245,42 @@
 
       function submitWord() {
         let lettersToShow = [];
+        let guessedLetterArray = [];
+        let roundResult = 'success';
         let guessedLetters = document.getElementsByClassName('guessedLetter');
         let currentWord = document.getElementById('word').value;
           for (let l = 0; l < guessedLetters.length; l++) {
             let guessedLetter = guessedLetters[l].value.toUpperCase();
+            guessedLetterArray.push(guessedLetter);
             let realLetter = currentWord.charAt(l);
             if (guessedLetter == realLetter) {
               lettersToShow.push(realLetter)
             }
           }
+          let guessedWord = guessedLetterArray.join("");
+          if(guessedWord != currentWord) {
+            lettersToShow = [];
+            roundResult = 'fail';
+          }
+          logResult(roundResult, lettersToShow);
+      }
+
+      function logResult(roundResult, lettersToShow) {
+         let resultDivs = document.querySelectorAll('.result');
+         roundToUse = parseInt(roundDiv.value) - 2;
+          if (roundResult == 'success') {
+            resultDivs[roundToUse].className = 'bi bi-check-circle-fill result';
+            gameResults.push(roundResult);
+          } else {
+            resultDivs[roundToUse].className = 'bi bi-x-circle-fill result';
+          }
           getWord(lettersToShow);
       }
 
       function getWord(lettersToShow) {
-          let roundDiv = document.getElementById('round');
-          let round = roundDiv.value;
-          let todaysSet = wordSets.filter((set) => set.date == today);
+          round = roundDiv.value;
+          if (round <= 3) {
+let todaysSet = wordSets.filter((set) => set.date == today);
           let lookupSet = todaysSet[0].words;
           let word = lookupSet.filter((set) => set.order == round);
           if(word.length > 0) {
@@ -256,7 +290,23 @@
           round = parseInt(round) + 1;
           roundDiv.value = round;
           }
+          
+          } else {
+            finishGame();
+          }
       }
+
+      function finishGame() {
+        if (gameResults.length == 1) {
+        alert('Phew!');
+      } else if (gameResults.length == 2) {
+        alert('Nice!');
+      } else if (gameResults.length == 3) {
+        alert('Woot woot!!');
+      } else {
+        alert('Better luck next time!');
+      }
+    }
 
       getWord();
 
