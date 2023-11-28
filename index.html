@@ -56,14 +56,11 @@
         <h1 id="header" class="text-center" style="height: 50px; color: #004F2D; font-family: 'Lilita One', sans-serif;">
         WORD 'EM UP!
       </h1>
-          <div id="gameContainer" style="height: 175px;">
+          <div id="gameContainer" style="height: 180px;">
             <div id="results"><i class="bi bi-circle result"></i>&nbsp;<i class="bi bi-circle result"></i>&nbsp;<i class="bi bi-circle result"></i></div>
             <input type="hidden" value="1" id="round">
             <div class="" id="wordHolder" style="">
           </div>
-          </div>
-          <div class="mt-2">
-           <button type="button" class="btn btn-primary mb-5" onClick="submitWord()" style="background-color: #D87CAC; border-color: #D87CAC; color: #004F2D; font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
           </div>
           <div>
             <div class="mb-2">
@@ -100,8 +97,9 @@
           </div>
           <div class="mb-2">
             <button type="button" class="btn keypad" onClick="keypad('<')"><</button>
-            <button type="button" class="btn keypad" onClick="keypad('delete')"><b><i class="bi bi-backspace"></i></b></button>
             <button type="button" class="btn keypad" onClick="keypad('>')">></button>
+            <button type="button" class="btn keypad" onClick="submitWord()" style="background-color: #D87CAC;  font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
+            <button type="button" class="btn keypad" onClick="keypad('delete')"><b><i class="bi bi-backspace"></i></b></button>
           </div>
           </div>
       </main>
@@ -152,9 +150,11 @@
              focusOnNextSib();
            } else if (letter == '<') {
             focusOnPrevSib();
-           } else if (letter == 'delete' && lastFocusDiv.className.indexOf("success-guess") < 0) {
+           } else if (letter == 'delete' && lastFocusDiv.value.length > 0) {
             lastFocusDiv.value = '';
             lastFocusDiv.focus();
+           } else if (letter == 'delete' && lastFocusDiv.value.length <= 0) {
+            focusOnPrevSib();
            }
         }
       }
