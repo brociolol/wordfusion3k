@@ -65,8 +65,8 @@
             <div class="" id="wordHolder" style="">
           </div>
           </div>
-          <div id="keyboard">
-            <div id="clue" class="mb-3 px-2 text-center border border-black border-1" style="background-color: #fff; width: 300px; "></div>
+          <div id="keyboard" class="d-flex flex-column justify-content-center align-items-center">
+            <div id="clue" class="mb-3 px-2 text-center border border-black border-1" style="background-color: #f5f5f5; width: 300px; "></div>
             <div class="mb-2">
               <button type="button" class="btn keypad" onClick="keypad('Q')">Q</button>
             <button type="button" class="btn keypad" onClick="keypad('W')">W</button>
@@ -189,8 +189,8 @@
 
         let active = lastFocusDiv;
         let sibling = lastFocusDiv.nextElementSibling;
-        //console.log(sibling.className);
-        if (sibling.className.indexOf("guessedLetter") >= 0) {
+        if (sibling) {
+          if (sibling.className.indexOf("guessedLetter") >= 0) {
           sibling.focus();
         if (sibling.className.indexOf("success-guess") >= 0) {
           sibling.focus();
@@ -202,8 +202,11 @@
             }
         }
         } else {
-          active.focus()
-        } 
+          active.focus();
+        }
+      } else {
+        active.focus();
+      }
       }
 
 
