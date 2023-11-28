@@ -23,7 +23,46 @@
           </div>
           </div>
           <div class="mt-5">
-           <button type="button" class="btn btn-primary" onClick="submitWord()" style="background-color: #D87CAC; border-color: #D87CAC; color: #004F2D; font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
+           <button type="button" class="btn btn-primary mb-5" onClick="submitWord()" style="background-color: #D87CAC; border-color: #D87CAC; color: #004F2D; font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
+          </div>
+          <div>
+            <div class="mb-2">
+              <button type="button" class="btn btn-primary" onClick="keypad('Q')">Q</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('W')">W</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('E')">E</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('R')">R</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('T')">T</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('Y')">Y</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('U')">U</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('I')">I</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('O')">O</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('P')">P</button>
+            </div>
+             <div class="mb-2">
+            <button type="button" class="btn btn-primary" onClick="keypad('A')">A</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('S')">S</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('D')">D</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('F')">F</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('G')">G</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('H')">H</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('J')">J</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('K')">K</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('L')">L</button>
+          </div>
+             <div class="mb-2">
+            <button type="button" class="btn btn-primary" onClick="keypad('Z')">Z</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('X')">X</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('C')">C</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('V')">V</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('B')">B</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('N')">N</button>
+            <button type="button" class="btn btn-primary" onClick="keypad('M')">M</button>
+          </div>
+          <div class="mb-2">
+            <button type="button" class="btn btn-primary">&nbsp;<&nbsp;</button>
+            <button type="button" class="btn btn-primary">DELETE</button>
+            <button type="button" class="btn btn-primary">&nbsp;>&nbsp;</button>
+          </div>
           </div>
       </main>
       <footer id="footer">
@@ -54,10 +93,18 @@
 
       let round = 1; 
 
-      function focusOnNextSib(callback) {
+      let lastFocus = '';
+
+      function keypad(letter) {
+        let lastFocusDiv = document.getElementById(lastFocus);
+        lastFocusDiv.value = letter;
+        focusOnNextSib(lastFocusDiv);
+      }
+
+      function focusOnNextSib(lastFocusDiv) {
         const letterRegex = /^[a-z]+$/i;
-        let active = document.activeElement;
-        let sibling = document.activeElement.nextElementSibling;
+        let active = lastFocusDiv;
+        let sibling = lastFocusDiv.nextElementSibling;
         if (active.className.indexOf("text-bg-success") > 0) {
           sibling.focus();
           focusOnNextSib();
@@ -88,11 +135,18 @@
          let letter = (lettersShow.indexOf(word.charAt(w)) >= 0 ? word.charAt(w) : "");
          let borderColor = (letter.length > 0 ? "border-success text-bg-success" : "border-black");
          let readOnly = (letter.length > 0 ? "readonly" : "");
-         wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" ' + readOnly + ' onKeyup="focusOnNextSib()">&nbsp;'
+         wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" ' + readOnly + ' onFocus="logFocus(\'letter' + w + '\')">&nbsp;'
         }
 
         wordsHTML += '<br><div id="clue" class="mb-2 text-center pt-5" style=""><b>Clue: </b>' + clue + '</div>'
         wordHolderDiv.innerHTML = wordsHTML;
+
+        let boxToFocusOn = document.getElementById('letter0');
+        boxToFocusOn.focus();
+      }
+
+      function logFocus(id) {
+       lastFocus = id;
       }
 
       function submitWord() {
