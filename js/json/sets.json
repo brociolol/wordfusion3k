@@ -4,8 +4,8 @@ const sets = [
             {
                 "order": 1,
                 "direction" : "c",
-                "word": "EVE",
-                "clue": "Twas the night before."
+                "word": "CREW",
+                "clue": "Boat rowers."
             },
             {
                 "order": 2,
@@ -18,8 +18,14 @@ const sets = [
                 "direction" : "r",
                 "word": "A BIT UNDER BAKED",
                 "clue": "Could've used more time."
+            },
+            {
+                "order": 4,
+                "direction" : "r",
+                "word": "CONTINENTAL",
+                "clue": "A nice brekkie or part of the US."
             }
         ],
-        "date": "2023-11-28"
+        "date": "2023-11-29"
     }
 ]
