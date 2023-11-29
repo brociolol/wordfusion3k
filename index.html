@@ -238,7 +238,11 @@
         let lettersToHighlight = Array.from(new Set(lettersToShow));
 
         let keys = document.querySelectorAll('.keypad');
+
         for (let k = 0; k < keys.length; k++) {
+          if (keys[k].className.indexOf('success-guess') >= 0) {
+            keys[k].className = 'btn keypad';
+          }
           if (lettersToHighlight.indexOf(keys[k].innerHTML) >= 0) {
             keys[k].className = keys[k].className + ' success-guess';
           }
@@ -253,6 +257,33 @@
        lastFocusDiv = document.getElementById(lastFocus);
       }
 
+      function randoKey(word, keyToExclude) {
+        let keys = document.querySelectorAll(".keypad");
+        let num = Math.floor(Math.random() * keys.length);
+        let randoLetter = keys[num].innerHTML;
+        if (randoLetter == keyToExclude) {
+          randoKey(keyToExclude);
+        }
+        return randoLetter;
+      }
+
+      function randoCorrectLetter(word) {
+        let wordLength = word.length;
+        let num = Math.floor(Math.random() * wordLength);
+        let randoLetter = word.charAt(num);
+        return randoLetter;
+      }
+
+      function shuffleLetters(lettersToShow) {
+    for (var i = lettersToShow.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = lettersToShow[i];
+        lettersToShow[i] = lettersToShow[j];
+        lettersToShow[j] = temp;
+    }
+    return lettersToShow;
+}
+
       function submitWord() {
         let lettersToShow = [];
         let guessedLetterArray = [];
@@ -262,14 +293,15 @@
           for (let l = 0; l < guessedLetters.length; l++) {
             let guessedLetter = guessedLetters[l].value.toUpperCase();
             guessedLetterArray.push(guessedLetter);
-            let realLetter = currentWord.charAt(l);
-            if (guessedLetter == realLetter) {
-              lettersToShow.push(realLetter)
-            }
+            lettersToShow = guessedLetterArray;
           }
           let guessedWord = guessedLetterArray.join("");
           if(guessedWord != currentWord) {
-            lettersToShow = [];
+          lettersToShow = [];
+           // let rando1 = randoCorrectLetter(currentWord);
+           // let rando2 = randoKey(rando1);
+           // lettersToShow.push(rando1);
+           // lettersToShow.push(rando2);
             roundResult = 'fail';
           }
           logResult(roundResult, lettersToShow);
@@ -279,23 +311,40 @@
          let resultDivs = document.querySelectorAll('.result');
          roundToUse = parseInt(roundDiv.value) - 2;
           if (roundResult == 'success') {
-            resultDivs[roundToUse].className = 'bi bi-check-circle-fill result';
-            gameResults.push(roundResult);
+           // resultDivs[roundToUse].className = 'bi bi-check-circle-fill result';
           } else {
             resultDivs[roundToUse].className = 'bi bi-x-circle-fill result';
+            gameResults.push(roundResult);
+            if (gameResults.length == 3) {
+              finishGame();
+            }
           }
           getWord(lettersToShow);
       }
 
       function getWord(lettersToShow) {
           round = roundDiv.value;
-          if (round <= 3) {
+          let letterArray = [];
+          if (round <= 5) {
 let todaysSet = wordSets.filter((set) => set.date == today);
           let lookupSet = todaysSet[0].words;
           let word = lookupSet.filter((set) => set.order == round);
           if(word.length > 0) {
             let currWord = word[0].word.replace(/\s/g, '');
             let currClue = word[0].clue;
+            if (lettersToShow) {
+              for (let r = 0; r < currWord.length; r++) {
+              if (lettersToShow.indexOf(currWord.charAt(r)) >= 0 && letterArray.indexOf(currWord.charAt(r)) < 0 ) {
+                letterArray.push(currWord.charAt(r))
+              }
+            }
+            }
+            if (letterArray) {
+              shuffledLetters = shuffleLetters(letterArray);
+              lettersToShow = [];
+              lettersToShow.push(shuffledLetters[0]);
+              lettersToShow.push(shuffledLetters[1]);
+            }
             generateBoxes(currWord, currClue, lettersToShow);
           round = parseInt(round) + 1;
           roundDiv.value = round;
@@ -307,16 +356,9 @@ let todaysSet = wordSets.filter((set) => set.date == today);
       }
 
       function finishGame() {
-        if (gameResults.length == 1) {
-        alert('Phew!');
-      } else if (gameResults.length == 2) {
-        alert('Nice!');
-      } else if (gameResults.length == 3) {
-        alert('Woot woot!!');
-      } else {
+        gameContainerDiv.innerHTML = '';
         alert('Better luck next time!');
-      }
-      gameContainerDiv.innerHTML = '';
+      
     }
 
       getWord();
