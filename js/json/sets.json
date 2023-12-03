@@ -10,13 +10,13 @@ const sets = [
             {
                 "order": 2,
                 "direction" : "c",
-                "word": "REVERB",
+                "word": "FRIEND",
                 "clue": "Guitar's echo."
             },
             {
                 "order": 3,
                 "direction" : "r",
-                "word": "A BIT UNDER BAKED",
+                "word": "BEING FRIENDS WITH A FELLA",
                 "clue": "Could've used more time."
             },
             {
@@ -25,7 +25,14 @@ const sets = [
                 "word": "CONTINENTAL",
                 "clue": "A nice brekkie or part of the US."
             }
+            ,
+            {
+                "order": 5,
+                "direction" : "r",
+                "word": "END",
+                "clue": "Finale"
+            }
         ],
-        "date": "2023-11-30"
+        "date": "2023-12-3"
     }
 ]
