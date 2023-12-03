@@ -16,23 +16,58 @@ const sets = [
             {
                 "order": 3,
                 "direction" : "r",
-                "word": "BEING FRIENDS WITH A FELLA",
-                "clue": "Could've used more time."
+                "word": "END",
+                "clue": "Finale"
             },
             {
                 "order": 4,
                 "direction" : "r",
                 "word": "CONTINENTAL",
                 "clue": "A nice brekkie or part of the US."
-            }
-            ,
+            },
             {
                 "order": 5,
                 "direction" : "r",
-                "word": "END",
-                "clue": "Finale"
+                "word": "BEING FRIENDS WITH A FELLA",
+                "clue": "Could've used more time."
             }
         ],
         "date": "2023-12-3"
+    },
+
+        {
+        "words": [
+            {
+                "order": 1,
+                "direction" : "c",
+                "word": "CREW",
+                "clue": "Other set."
+            },
+            {
+                "order": 2,
+                "direction" : "c",
+                "word": "FRIEND",
+                "clue": "Guitar's echo."
+            },
+            {
+                "order": 3,
+                "direction" : "r",
+                "word": "END",
+                "clue": "Finale"
+            },
+            {
+                "order": 4,
+                "direction" : "r",
+                "word": "CONTINENTAL",
+                "clue": "A nice brekkie or part of the US."
+            },
+            {
+                "order": 5,
+                "direction" : "r",
+                "word": "BEING FRIENDS WITH A FELLA",
+                "clue": "Could've used more time."
+            }
+        ],
+        "date": "2023-12-6"
     }
 ]
