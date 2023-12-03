@@ -32,6 +32,11 @@
         outline: none;
       }
 
+      .success-guess:hover {
+        background-color: #49705e;
+        color: #fff;
+      }
+
       input:active {
         background-color: #F9B9C3
       }
@@ -104,6 +109,7 @@
             <button type="button" class="btn keypad" onClick="keypad('>')">></button>
             <button type="button" class="btn keypad submit" onClick="submitWord()" style="background-color: #D87CAC;  font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
             <button type="button" class="btn keypad" onClick="keypad('delete')"><b><i class="bi bi-backspace"></i></b></button>
+            <button type="button" class="btn keypad submit" onClick="clearGuessedLetters()" style="font-weight: bold;">&nbsp;CLEAR&nbsp;</button>
           </div>
           </div>
       </main>
@@ -163,6 +169,14 @@
             focusOnPrevSib();
            }
         }
+      }
+
+      function clearGuessedLetters() {
+        let guessedLetters = document.querySelectorAll('.guessedLetter');
+        for (let i = 0; i < guessedLetters.length; i++) {
+          guessedLetters[i].value = '';
+        }
+        lastFocusDiv.focus();
       }
 
       function focusOnPrevSib() {
@@ -308,15 +322,16 @@
       }
 
       function logResult(roundResult, lettersToShow) {
-         let resultDivs = document.querySelectorAll('.result');
+         let resultDivs = document.querySelectorAll('.result:not(.bi-x-circle-fill)');
          roundToUse = parseInt(roundDiv.value) - 2;
           if (roundResult == 'success') {
            // resultDivs[roundToUse].className = 'bi bi-check-circle-fill result';
           } else {
-            resultDivs[roundToUse].className = 'bi bi-x-circle-fill result';
+            let resultDivToFill = resultDivs[0];
+           resultDivToFill.className = 'bi bi-x-circle-fill result';
             gameResults.push(roundResult);
             if (gameResults.length == 3) {
-              finishGame();
+              finishGame("failure");
             }
           }
           getWord(lettersToShow);
@@ -340,10 +355,10 @@ let todaysSet = wordSets.filter((set) => set.date == today);
             }
             }
             if (letterArray) {
-              shuffledLetters = shuffleLetters(letterArray);
-              lettersToShow = [];
-              lettersToShow.push(shuffledLetters[0]);
-              lettersToShow.push(shuffledLetters[1]);
+              //shuffledLetters = shuffleLetters(letterArray);
+              lettersToShow = letterArray;
+              //lettersToShow.push(shuffledLetters[0]);
+              //lettersToShow.push(shuffledLetters[1]);
             }
             generateBoxes(currWord, currClue, lettersToShow);
           round = parseInt(round) + 1;
@@ -351,13 +366,20 @@ let todaysSet = wordSets.filter((set) => set.date == today);
           }
           
           } else {
-            finishGame();
+            finishGame("success");
           }
       }
 
-      function finishGame() {
-        gameContainerDiv.innerHTML = '';
-        alert('Better luck next time!');
+      function finishGame(result) {
+        if (result == "failure") {
+          clueDiv.innerHTML = '';
+        gameContainerDiv.innerHTML = '<h1>Better luck next time!</h1>';
+        } else {
+          clueDiv.innerHTML = '';
+        gameContainerDiv.innerHTML = '<h1>Woot woot!</h1>';
+        }
+
+        //alert('Better luck next time!');
       
     }
 
