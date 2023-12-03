@@ -25,6 +25,14 @@
         border: 1px solid #8a858f;
       }
 
+      .submit {
+        background-color: #F9B9C3;  
+      }
+
+      .submit:hover {
+        background-color: #D87CAC;
+      }
+
       .success-guess {
         background-color: #004F2D;
         color: #fff;
@@ -59,8 +67,13 @@
     </style>
   </head>
   <body style="background-color: #EDF2F4">
+    <div id="rules" style="position: fixed; width: 50%; height: 50%; background-color: red; margin: 0px auto; left: 25%; top: 5%; padding: 10px;" onClick="hideRules()">
+        <b>Here are the rules:</b><br>
+        This game is a variation of the classic crossword puzzle. You will be given a clue and a set of empty squares and you must correctly guess what the word is based on the clue.
+      </div>
     <div class="d-flex justify-content-center align-items-center" id="container" style="">
       <main class="d-flex justify-content-center align-items-center flex-column text-center p-2 mt-3" id="main" style="width: 100%; max-width: 900px; height: 90vh;">
+        <div id="menu" class="py-3" style="width: 300px;"><a onClick="showRules()">RULES</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a onClick="randomize()">RANDOMIZE</a></div>
         <h1 id="header" class="text-center" style="height: 50px; color: #004F2D; font-family: 'Lilita One', sans-serif;">
         WORD 'EM UP!
       </h1>
@@ -107,9 +120,9 @@
           <div class="mb-2">
             <button type="button" class="btn keypad" onClick="keypad('<')"><</button>
             <button type="button" class="btn keypad" onClick="keypad('>')">></button>
-            <button type="button" class="btn keypad submit" onClick="submitWord()" style="background-color: #D87CAC;  font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
+            <button type="button" class="btn keypad submit" onClick="submitWord()" style="font-weight: bold; ">&nbsp;SUBMIT&nbsp;</button>
             <button type="button" class="btn keypad" onClick="keypad('delete')"><b><i class="bi bi-backspace"></i></b></button>
-            <button type="button" class="btn keypad submit" onClick="clearGuessedLetters()" style="font-weight: bold;">&nbsp;CLEAR&nbsp;</button>
+            <button type="button" class="btn keypad" onClick="clearGuessedLetters()" style="font-weight: bold;">&nbsp;CLEAR&nbsp;</button>
           </div>
           </div>
       </main>
@@ -125,7 +138,7 @@
       const wordSets = sets;
 
       // define elements to reference
-      const wordHolderDiv = document.getElementById('wordHolder');
+      let wordHolderDiv = document.getElementById('wordHolder');
       const gameContainerDiv = document.getElementById('gameContainer');
       const clueDiv = document.getElementById('clue');
       const keyboardDiv = document.getElementById('keyboard');
@@ -136,7 +149,7 @@
       const todaySet = wordSets[0];
 
       // define the current date to use in loop of today's set
-      const today = getCurrentDate(new Date());
+      let today = getCurrentDate(new Date());
 
       // define letter regex
       const letterRegex = /^[a-z]+$/i;
@@ -171,12 +184,20 @@
         }
       }
 
+      function hideRules() {
+        document.getElementById("rules").style.display = "none";
+      }
+
+      function showRules() {
+        document.getElementById("rules").style.display = "block";
+      }
+
       function clearGuessedLetters() {
         let guessedLetters = document.querySelectorAll('.guessedLetter');
         for (let i = 0; i < guessedLetters.length; i++) {
           guessedLetters[i].value = '';
         }
-        lastFocusDiv.focus();
+        guessedLetters[0].focus();
       }
 
       function focusOnPrevSib() {
@@ -235,6 +256,10 @@
 
         let wordsHTML = '';
 
+        gameContainerDiv.innerHTML = '<input type="hidden" value="1" id="round"><div class="" id="wordHolder" style="">';
+
+        wordHolderDiv = document.getElementById('wordHolder');
+
         for (let w = 0; w < word.length; w++) {
           if (w == 0) {
             wordsHTML += '<input type="hidden" id="word" name="word" value="' + word + '"><br>'
@@ -252,6 +277,17 @@
         let lettersToHighlight = Array.from(new Set(lettersToShow));
 
         let keys = document.querySelectorAll('.keypad');
+
+        if (round == 1) {
+          let tempWord = word;
+          let randomKeyRound1 = (Math.floor(Math.random() * tempWord.length));
+          let randoLetter1 = word.charAt(randomKeyRound1);
+          lettersToHighlight.push(randoLetter1);
+          tempWord = tempWord.replace(randoLetter1, '');
+          let randomKeyRound2 = (Math.floor(Math.random() * tempWord.length));
+          let randoLetter2 = word.charAt(randomKeyRound2);
+          lettersToHighlight.push(randoLetter2);
+        }
 
         for (let k = 0; k < keys.length; k++) {
           if (keys[k].className.indexOf('success-guess') >= 0) {
@@ -325,23 +361,36 @@
          let resultDivs = document.querySelectorAll('.result:not(.bi-x-circle-fill)');
          roundToUse = parseInt(roundDiv.value) - 2;
           if (roundResult == 'success') {
-           // resultDivs[roundToUse].className = 'bi bi-check-circle-fill result';
+           getWord(lettersToShow);
           } else {
             let resultDivToFill = resultDivs[0];
            resultDivToFill.className = 'bi bi-x-circle-fill result';
             gameResults.push(roundResult);
+            clearGuessedLetters();
             if (gameResults.length == 3) {
               finishGame("failure");
             }
           }
-          getWord(lettersToShow);
       }
 
-      function getWord(lettersToShow) {
+      function randomize() {
+        document.getElementById('results').innerHTML = '<i class="bi bi-circle result"></i>&nbsp;<i class="bi bi-circle result"></i>&nbsp;<i class="bi bi-circle result"></i>';
+        gameResults = [];
+        let randomSetNum = Math.floor((Math.random() * wordSets.length));
+        let randomDate = wordSets[randomSetNum].date;
+        let fakeArray = [];
+        getWord(fakeArray, randomDate);
+      }
+
+      function getWord(lettersToShow, randomDate) {
           round = roundDiv.value;
           let letterArray = [];
+          if (randomDate) {
+            today = randomDate;
+            round = 1;
+          }
           if (round <= 5) {
-let todaysSet = wordSets.filter((set) => set.date == today);
+          let todaysSet = wordSets.filter((set) => set.date == today);
           let lookupSet = todaysSet[0].words;
           let word = lookupSet.filter((set) => set.order == round);
           if(word.length > 0) {
@@ -360,6 +409,7 @@ let todaysSet = wordSets.filter((set) => set.date == today);
               //lettersToShow.push(shuffledLetters[0]);
               //lettersToShow.push(shuffledLetters[1]);
             }
+            //console.log(currWord);
             generateBoxes(currWord, currClue, lettersToShow);
           round = parseInt(round) + 1;
           roundDiv.value = round;
@@ -371,12 +421,11 @@ let todaysSet = wordSets.filter((set) => set.date == today);
       }
 
       function finishGame(result) {
+        clueDiv.innerHTML = '';
         if (result == "failure") {
-          clueDiv.innerHTML = '';
         gameContainerDiv.innerHTML = '<h1>Better luck next time!</h1>';
         } else {
-          clueDiv.innerHTML = '';
-        gameContainerDiv.innerHTML = '<h1>Woot woot!</h1>';
+        gameContainerDiv.innerHTML = '<h1>Woot woot!</h1><br><img width="150px" height="auto" src="./successful_cow.png">';
         }
 
         //alert('Better luck next time!');
