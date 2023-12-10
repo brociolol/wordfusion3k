@@ -61,6 +61,23 @@
         padding: 10px;
       }
 
+      .shake {
+    animation-name: shake;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+      }
+      @keyframes shake {
+        0%, 50% {
+            transform: translateX(0);
+        }
+        10%, 30% {
+            transform: translateX(-10px);
+        }
+        20%, 40% {
+            transform: translateX(10px);
+        }
+    }
+
       input:active {
         background-color: #F9B9C3
       }
@@ -193,12 +210,14 @@
       let gameResults = [];
 
       function clearYellowKeys(lastFocusDiv) {
+        //console.log(lastFocusDiv.value);
           lastFocusDiv.className = lastFocusDiv.className.replace('empty-letter' , '');
       }
 
       function keypad(letter) {
         if (letterRegex.test(letter) && letter.length == 1) {
           lastFocusDiv.value = letter;
+          clearYellowKeys(lastFocusDiv);
           focusOnNextSib();
         } else {
           if (letter == '>') {
@@ -401,6 +420,8 @@
 
       function logResult(roundResult, lettersToShow) {
          let resultDivs = document.querySelectorAll('.result:not(.bi-x-circle-fill)');
+         let resultDiv = document.getElementById('results');
+         resultDiv.className = '';
          roundToUse = parseInt(roundDiv.value) - 2;
           if (roundResult == 'success') {
            getWord(lettersToShow);
@@ -408,7 +429,10 @@
             let resultDivToFill = resultDivs[0];
            resultDivToFill.className = 'bi bi-x-circle-fill result';
             gameResults.push(roundResult);
-            clearGuessedLetters();
+            resultDiv.classList.remove('shake');
+            void resultDiv.offsetWidth; // Trigger reflow
+            resultDiv.classList.add('shake');
+            //clearGuessedLetters();
             if (gameResults.length == 3) {
               finishGame("failure");
             }
