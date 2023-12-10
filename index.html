@@ -45,6 +45,10 @@
         color: #fff;
       }
 
+      .empty-letter {
+        background-color: #FFDA22;
+      }
+
       .rules {
         position: fixed; 
         width: 25%; 
@@ -188,6 +192,10 @@
 
       let gameResults = [];
 
+      function clearYellowKeys(lastFocusDiv) {
+          lastFocusDiv.className = lastFocusDiv.className.replace('empty-letter' , '');
+      }
+
       function keypad(letter) {
         if (letterRegex.test(letter) && letter.length == 1) {
           lastFocusDiv.value = letter;
@@ -327,6 +335,7 @@
       function logFocus(id) {
        lastFocus = id;
        lastFocusDiv = document.getElementById(lastFocus);
+       clearYellowKeys(lastFocusDiv);
       }
 
       function randoKey(word, keyToExclude) {
@@ -361,7 +370,17 @@
         let guessedLetterArray = [];
         let roundResult = 'success';
         let guessedLetters = document.getElementsByClassName('guessedLetter');
-        let currentWord = document.getElementById('word').value;
+        let emptyLetters = []
+        for (g = 0; g < guessedLetters.length; g++) {
+          if (guessedLetters[g].value == '') {
+            emptyLetters.push(guessedLetters[g]);
+            guessedLetters[g].className = guessedLetters[g].className + ' empty-letter'
+          }
+        };
+        if (emptyLetters.length > 0) {
+          //console.log('there are empty letters');
+        } else {
+          let currentWord = document.getElementById('word').value;
           for (let l = 0; l < guessedLetters.length; l++) {
             let guessedLetter = guessedLetters[l].value.toUpperCase();
             guessedLetterArray.push(guessedLetter);
@@ -377,6 +396,7 @@
             roundResult = 'fail';
           }
           logResult(roundResult, lettersToShow);
+        }
       }
 
       function logResult(roundResult, lettersToShow) {
