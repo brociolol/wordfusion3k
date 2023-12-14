@@ -255,7 +255,7 @@
         let sibling = lastFocusDiv.previousElementSibling;
         if (sibling.className.indexOf("guessedLetter") >= 0) {
           sibling.focus();
-        if (active.className.indexOf("success-guess") >= 0) {
+        if (active.className.indexOf("successx-guess") > 0) {
           sibling.focus();
           focusOnNextSib();
         } else {
@@ -276,7 +276,7 @@
         if (sibling) {
           if (sibling.className.indexOf("guessedLetter") >= 0) {
           sibling.focus();
-        if (sibling.className.indexOf("success-guess") >= 0) {
+        if (sibling.className.indexOf("sucxess-guess") >= 0) {
           sibling.focus();
           focusOnNextSib();
         } else {
@@ -307,6 +307,7 @@
 
         gameContainerDiv.innerHTML = '<input type="hidden" value="1" id="round"><div class="" id="wordHolder" style="">';
 
+
         wordHolderDiv = document.getElementById('wordHolder');
 
         for (let w = 0; w < word.length; w++) {
@@ -315,8 +316,8 @@
           }
   
          let letter = "";
-         let borderColor = (letter.length > 0 ? "border-black" : "border-black");
-         wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 ' + borderColor + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" readOnly onFocus="logFocus(\'letter' + w + '\')">&nbsp;'
+         let sucessClass = (lettersToShow.indexOf(word.charAt(w)) >= 0 ? "success-guess" : "");
+         wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 border-black ' + sucessClass + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" readOnly onFocus="logFocus(\'letter' + w + '\')">&nbsp;'
         }
 
         let clueHTML = '<b>Clue: </b>' + clue;
@@ -327,16 +328,6 @@
 
         let keys = document.querySelectorAll('.keypad');
 
-        if (round == 1) {
-          let tempWord = word;
-          let randomKeyRound1 = (Math.floor(Math.random() * tempWord.length));
-          let randoLetter1 = word.charAt(randomKeyRound1);
-          lettersToHighlight.push(randoLetter1);
-          tempWord = tempWord.replace(randoLetter1, '');
-          let randomKeyRound2 = (Math.floor(Math.random() * tempWord.length));
-          let randoLetter2 = tempWord.charAt(randomKeyRound2);
-          lettersToHighlight.push(randoLetter2);
-        }
 
         for (let k = 0; k < keys.length; k++) {
           if (keys[k].className.indexOf('success-guess') >= 0) {
@@ -347,8 +338,21 @@
           }
         }
 
+        if (round == 1) {
+          let tempWord = word;
+          //let randomKeyRound1 = (Math.floor(Math.random() * tempWord.length));
+         // let randoLetter1 = word.charAt(randomKeyRound1);
+          //lettersToHighlight.push(randoLetter1);
+          //tempWord = tempWord.replace(randoLetter1, '');
+          //let randomKeyRound2 = (Math.floor(Math.random() * tempWord.length));
+         // let randoLetter2 = tempWord.charAt(randomKeyRound2);
+         // lettersToHighlight.push(randoLetter2);
+        }
+
+        
+
         let boxToFocusOn = document.getElementById('letter0');
-        boxToFocusOn.focus();
+       // boxToFocusOn.focus();
       }
 
       function logFocus(id) {
