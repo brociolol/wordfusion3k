@@ -1,76 +1,5 @@
 	const sets = [
-	    {
-	        "words": [
-	            {
-	                "order": 1,
-	                "direction" : "c",
-	                "word": "CREW",
-	                "clue": "Boat rowers."
-	            },
-	            {
-	                "order": 2,
-	                "direction" : "c",
-	                "word": "FRIEND",
-	                "clue": "Bud"
-	            },
-	            {
-	                "order": 3,
-	                "direction" : "r",
-	                "word": "END",
-	                "clue": "Finale"
-	            },
-	            {
-	                "order": 4,
-	                "direction" : "r",
-	                "word": "CONTINENTAL",
-	                "clue": "A nice brekkie or part of the US."
-	            },
-	            {
-	                "order": 5,
-	                "direction" : "r",
-	                "word": "BEING FRIENDS WITH A FELLA",
-	                "clue": "What only a meanie stops doing."
-	            }
-	        ],
-	        "date": "2023-12-10"
-	    },
-
-	        {
-	        "words": [
-	            {
-	                "order": 1,
-	                "direction" : "c",
-	                "word": "EVE",
-	                "clue": "'Tis the night before.'"
-	            },
-	            {
-	                "order": 2,
-	                "direction" : "c",
-	                "word": "REVERB",
-	                "clue": "Guitar's echo."
-	            },
-	            {
-	                "order": 3,
-	                "direction" : "r",
-	                "word": "CAREER",
-	                "clue": "Job path."
-	            },
-	            {
-	                "order": 4,
-	                "direction" : "r",
-	                "word": "LOCK AND KEY",
-	                "clue": "Full imprisonment."
-	            },
-	            {
-	                "order": 5,
-	                "direction" : "r",
-	                "word": "A BIT UNDERBAKED",
-	                "clue": "Could've used more time."
-	            }
-	        ],
-	        "date": "2023-12-6"
-	    },
-
+	    
 	        {
 	        "words": [
 	    		{
@@ -82,8 +11,8 @@
 	    		{
 	    			"order": 2,
 	    			"direction": "c",
-	    			"word": "SEA OF TRANQUILITY",
-	    			"clue": "Celestial body of water where Neil and Buzz took their first steps"
+	    			"word": "TWINSIES",
+	    			"clue": "\"Oh my god, we're like the same person basically!\""
 	    		},
 	    		{
 	    			"order": 3,
@@ -100,11 +29,11 @@
 	    		{
 	    			"order": 5,
 	    			"direction": "c",
-	    			"word": "TOO GOOD TO BE TRUE",
-	    			"clue": "It can't be real!"
+	    			"word": "THE POSTAL SERVICE",
+	    			"clue": "The greatest concert according to Matt"
 	    		}
 	        ],
-	        "date": "2023-12-17"
+	        "date": "2023-12-23"
 	    },
 
 	        {
@@ -140,7 +69,7 @@
 	    			"clue": "Where one might see daredevils or mermaids"
 	    		}
 	        ],
-	        "date": "2023-12-18"
+	        "date": "2023-12-22"
 	    },
 
 	        {
@@ -176,7 +105,7 @@
 	    			"clue": "Oh, come on!"
 	    		}
 	        ],
-	        "date": "2023-12-19"
+	        "date": "2023-12-24"
 	    }
 
 	]
