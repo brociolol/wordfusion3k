@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TOP SECRET PROJECT</title>
+    <title>WORD 'EM UP!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,7 +52,7 @@
       .rules {
         position: fixed; 
         width: 25%; 
-        height: 50%; 
+        height: 70%; 
         border: 2px solid #000; 
         background-color: #fff;
         margin: 0px auto; 
@@ -100,7 +100,7 @@
   }
   .rules {
           width: 95%; 
-          height: 400px;
+          height: 450px;
         left: 1%; 
       }
 }
@@ -111,7 +111,7 @@
     <div id="rules" class="rules" onClick="hideRules()">
       <div class="text-center"><img width="100px" height="auto" src="./prof_cow.png" style="margin: 0px auto; text-align: center"></div><br>
         <b>Here are the rules:</b> (click to close)<br>
-        This game is a variation of the classic crossword puzzle. You will be given a clue and a set of empty squares and you must correctly guess what the word is based on the clue.<br>
+        This game is a variation of the classic crossword puzzle. You will be given a clue and a set of empty squares and you must correctly guess what the word is based on the clue. There are 5 words you must correctly guess to win. Each correctly guessed word will give you hints on the following word. You must correctly guess a word before moving onto the next. If you have 5 incorrect then, sadly, you lose!<br>
 
       </div>
     <div class="d-flex justify-content-center align-items-center" id="container" style="">
@@ -120,7 +120,12 @@
         <h1 id="header" class="text-center" style="height: 50px; color: #004F2D; font-family: 'Lilita One', sans-serif;">
         WORD 'EM UP!
       </h1>
-      <div id="results"><i class="bi bi-circle result"></i>&nbsp;<i class="bi bi-circle result"></i>&nbsp;<i class="bi bi-circle result"></i></div>
+      <div id="results">
+        <i class="bi bi-circle result"></i>&nbsp;
+        <i class="bi bi-circle result"></i>&nbsp;
+        <i class="bi bi-circle result"></i>&nbsp;
+        <i class="bi bi-circle result"></i>&nbsp;
+        <i class="bi bi-circle result"></i></div>
           <div id="gameContainer" class="d-flex align-items-center justify-content-center flex-column" style="height: 250px;">
             <input type="hidden" value="1" id="round">
             <div class="" id="wordHolder" style="">
@@ -438,7 +443,7 @@
             void resultDiv.offsetWidth; // Trigger reflow
             resultDiv.classList.add('shake');
             //clearGuessedLetters();
-            if (gameResults.length == 3) {
+            if (gameResults.length == 5) {
               finishGame("failure");
             }
           }
@@ -494,7 +499,7 @@
       function finishGame(result) {
         clueDiv.innerHTML = '';
         if (result == "failure") {
-        gameContainerDiv.innerHTML = '<h1>Better luck next time!</h1>';
+        gameContainerDiv.innerHTML = '<h1>Better luck next time!</h1><br>The word was: ' + document.getElementById('word').value;
         } else {
         gameContainerDiv.innerHTML = '<h1>Woot woot!</h1><br><img width="150px" height="auto" src="./successful_cow.png">';
         }
