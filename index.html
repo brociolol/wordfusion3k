@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WORD 'EM UP!</title>
+    <title>TOP SECRET PROJECT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,7 @@
         font-weight: bold;
         text-align: center;
         padding: 8px;
+        touch-action: manipulation;
       }
       .keypad:hover {
         border: 1px solid #8a858f;
@@ -320,8 +321,8 @@
             wordsHTML += '<input type="hidden" id="word" name="word" value="' + word + '"><br>'
           }
   
-         let letter = "";
-         let sucessClass = (lettersToShow.indexOf(word.charAt(w)) >= 0 ? "success-guess" : "");
+         let letter = (lettersToShow.indexOf(word.charAt(w)) >= 0 ? word.charAt(w) : "");
+         let sucessClass = (lettersToShow.indexOf(word.charAt(w)) >= 0 ? "" : "");
          wordsHTML += '<input id="letter' + w + '" value="' + letter + '" class="guessedLetter mb-2 text-center border border-3 border-black ' + sucessClass + '" style="width: 45px; height: 45px; text-transform: uppercase;" maxlength="1" readOnly onFocus="logFocus(\'letter' + w + '\')">&nbsp;'
         }
 
@@ -336,10 +337,10 @@
 
         for (let k = 0; k < keys.length; k++) {
           if (keys[k].className.indexOf('success-guess') >= 0) {
-            keys[k].className = 'btn keypad';
+           // keys[k].className = 'btn keypad';
           }
           if (lettersToHighlight.indexOf(keys[k].innerHTML) >= 0) {
-            keys[k].className = keys[k].className + ' success-guess';
+            //keys[k].className = keys[k].className + ' success-guess';
           }
         }
 
@@ -356,7 +357,8 @@
          boxToFocusOn.focus();
         }
 
-        
+        let boxToFocusOn = document.getElementById('letter0');
+         boxToFocusOn.focus();
 
         
       }
@@ -499,10 +501,11 @@
       function finishGame(result) {
         clueDiv.innerHTML = '';
         if (result == "failure") {
-        gameContainerDiv.innerHTML = '<h1>Better luck next time!</h1><br>The word was: ' + document.getElementById('word').value + '<br><img width="150px" height="auto" src="./sad_clown.png"><br><br>';
+        gameContainerDiv.innerHTML = '<h1>Better luck next time!</h1><br>The word was: ' + document.getElementById('word').value;
         } else {
         gameContainerDiv.innerHTML = '<h1>Woot woot!</h1><br><img width="150px" height="auto" src="./successful_cow.png">';
         }
+
         //alert('Better luck next time!');
       
     }
