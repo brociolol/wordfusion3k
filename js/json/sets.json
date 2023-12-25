@@ -106,6 +106,42 @@
 	    		}
 	        ],
 	        "date": "2023-12-24"
+	    },
+
+	        {
+	        "words": [
+	    		{
+	    			"order": 1,
+	    			"direction": "c",
+	    			"word": "SANTAS WORKSHOP",
+	    			"clue": "Where the elves craft and create..."
+	    		},
+	    		{
+	    			"order": 2,
+	    			"direction": "c",
+	    			"word": "STARSHIP ENTERPRISE",
+	    			"clue": "Picard's ship that boldy went"
+	    		},
+	    		{
+	    			"order": 3,
+	    			"direction": "c",
+	    			"word": "PAUL AND PRUE",
+	    			"clue": "Baking royalty"
+	    		},
+	    		{
+	    			"order": 4,
+	    			"direction": "c",
+	    			"word": "ROYAL MAIL",
+	    			"clue": "British carrier"
+	    		},
+	    		{
+	    			"order": 5,
+	    			"direction": "c",
+	    			"word": "YOU BOW TO NO ONE",
+	    			"clue": "Tear-jerker from Aragorn"
+	    		}
+	        ],
+	        "date": "2023-12-25"
 	    }
 
 	]
