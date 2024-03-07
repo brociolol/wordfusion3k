@@ -142,6 +142,42 @@
 	    		}
 	        ],
 	        "date": "2023-12-25"
+	    },
+
+	        {
+	        "words": [
+	    		{
+	    			"order": 1,
+	    			"direction": "c",
+	    			"word": "CUPPA",
+	    			"clue": "British Isle tea or coffee"
+	    		},
+	    		{
+	    			"order": 2,
+	    			"direction": "c",
+	    			"word": "PACKHORSE",
+	    			"clue": "Burro for burdens"
+	    		},
+	    		{
+	    			"order": 3,
+	    			"direction": "c",
+	    			"word": "PUNCH DRUNK LOVE",
+	    			"clue": "Romance under the influence?"
+	    		},
+	    		{
+	    			"order": 4,
+	    			"direction": "c",
+	    			"word": "OLIVE BRANCH",
+	    			"clue": "Sign of truce"
+	    		},
+	    		{
+	    			"order": 5,
+	    			"direction": "c",
+	    			"word": "EVERYWHERE BY MICHELLE BRANCH",
+	    			"clue": "2001 omniprescent hit song"
+	    		}
+	        ],
+	        "date": "2024-03-07"
 	    }
 
 	]
